@@ -1,16 +1,20 @@
-function debounce(fn, delay) {
+function debounce(fn, delay = 300, immediate = false) {
     let timer;
     
     return function (...args) {
       const context = this;
+      
+      if (immediate && !timer) {
+        fn.apply(context, args);
+      }
   
       clearTimeout(timer);
       
       timer = setTimeout(() => {
-        // Invoke function after delay
         fn.apply(context, args);
       }, delay);
     };
   }
   
   module.exports = debounce;
+  
